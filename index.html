@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NorthGate Student Admission & Visa Form</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f6f5fa; display: flex; justify-content: center; padding: 15px; margin: 0; }
+        .form-container { background: #ffffff; max-width: 850px; width: 100%; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(111, 66, 193, 0.1); border-top: 10px solid #8a63d2; margin-top: 20px; margin-bottom: 40px; }
+        .logo-container { text-align: center; margin-bottom: 20px; }
+        .logo-container img { max-width: 180px; height: auto; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .header h2 { color: #6f42c1; margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header p { color: #666; margin: 5px 0 0; font-size: 14px; }
+        .section-title { background: #f3eefa; color: #6f42c1; padding: 12px 15px; border-radius: 5px; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; border-left: 5px solid #8a63d2; }
+        
+        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+        
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; color: #333; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; transition: 0.3s; }
+        input:focus, select:focus, textarea:focus { border-color: #8a63d2; outline: none; box-shadow: 0 0 5px rgba(138, 99, 210, 0.3); }
+        .full-width { grid-column: 1 / -1; }
+        
+        #travel_countries_container, #admission_refusal_container, #visa_refusal_container { display: none; }
+
+        /* Declaration Box Style Alignment */
+        .declaration-box { 
+            grid-column: 1 / -1; 
+            margin-top: 30px; 
+            padding: 20px; 
+            background: #faf8ff; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            border: 1px solid #e1d5f5; 
+            text-align: left; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .declaration-box input[type="checkbox"] { 
+            width: 18px; 
+            height: 18px; 
+            margin: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .declaration-box label { 
+            cursor: pointer; 
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .submit-btn { width: 100%; padding: 18px; background-color: #6f42c1; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s ease; }
+        .submit-btn:hover { background-color: #5a32a3; }
+        .submit-btn:disabled { background-color: #cccccc; }
+        
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+        .modal-box { background: white; margin: 12% auto; padding: 40px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; }
+        .success-icon { font-size: 60px; color: #25D366; margin-bottom: 20px; }
+
+        /* Modal Buttons CSS Layout */
+        .modal-btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
+        .home-btn { width: 100%; padding: 15px; background-color: #f6f5fa; color: #333; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s ease; text-decoration: none; display: inline-block; box-sizing: border-box; }
+        .home-btn:hover { background-color: #e4e6eb; }
+        .modal-box .submit-btn { margin-top: 0; padding: 15px; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="logo-container"><img src="logo.png" alt="NorthGate Logo" onerror="this.src='logo.webp'"></div>
+    <div class="header">
+        <p><strong>STUDENT ADMISSION & VISA ASSESSMENT FORM</strong></p>
+    </div>
+
+    <form id="studentForm">
+        <!-- Hidden input for the master routing engine -->
+        <input type="hidden" name="form_type" value="Student">
+        
+        <div class="section-title">👤 Personal Details</div>
+        <div class="grid">
+            <div class="input-group"><label>Full Name (as per Passport) *</label><input type="text" name="full_name" required></div>
+            <div class="input-group"><label>Father’s / Husband’s Name *</label><input type="text" name="father_name" required></div>
+            <div class="input-group"><label>Date of Birth *</label><input type="date" name="dob" required></div>
+            <div class="input-group"><label>CNIC / Passport No *</label><input type="text" name="passport" required></div>
+            <div class="input-group"><label>Contact Number *</label><input type="text" name="contact" required></div>
+            <div class="input-group"><label>Email Address *</label><input type="email" name="email_id" required></div>
+        </div>
+
+        <div class="section-title">🎓 Academic Background</div>
+        <div class="grid">
+            <div class="input-group">
+                <label>Last Academic Qualification *</label>
+                <select name="last_qualification" required>
+                    <option value="">Select</option>
+                    <option value="Matric / O-Level">Matric / O-Level</option>
+                    <option value="Intermediate / A-Level">Intermediate / A-Level</option>
+                    <option value="Bachelors (4 Years)">Bachelors (4 Years)</option>
+                    <option value="Masters">Masters</option>
+                </select>
+            </div>
+            <div class="input-group"><label>Passing Year & Institution Name *</label><input type="text" name="academic_history" placeholder="e.g. 2025 - Karachi University" required></div>
+            <div class="input-group"><label>CGPA / Percentage / Grade *</label><input type="text" name="grades" placeholder="e.g. 3.4 CGPA or 78%" required></div>
+            <div class="input-group"><label>English Test Score (IELTS / Duolingo / TOEFL)</label><input type="text" name="english_score" placeholder="e.g. IELTS 6.5 Bands / Not Given Yet"></div>
+        </div>
+
+        <div class="section-title">🏛️ Desired Study Plans & Preferences</div>
+        <div class="grid">
+            <div class="input-group"><label>Intended Country to Apply *</label><input type="text" name="intended_country" placeholder="e.g. Canada, Italy, UK, USA" required></div>
+            <div class="input-group"><label>Intended City / Province *</label><input type="text" name="intended_city" placeholder="e.g. Toronto, Milan, Berlin" required></div>
+            <div class="input-group"><label>Field of Study / Course Interest *</label><input type="text" name="field_of_study" placeholder="e.g. Computer Science, MBA, Engineering" required></div>
+            <div class="input-group"><label>Preferred University Name *</label><input type="text" name="university_name" placeholder="e.g. University of Toronto, Politecnico di Milano" required></div>
+        </div>
+
+        <div class="section-title">🌍 Travel & Financial History</div>
+        <div class="grid">
+            <div class="input-group">
+                <label>Have you travelled internationally before? *</label>
+                <select name="intl_travel" onchange="toggleTravelCountries(this.value)" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div class="input-group" id="travel_countries_container">
+                <label>Countries Visited</label>
+                <input type="text" name="countries_visited" placeholder="e.g. Turkey, UAE">
+            </div>
+            <div class="input-group full-width"><label>Current Monthly Family Income / Financial Sponsor Status *</label><input type="text" name="financial_status" placeholder="e.g. Father sponsoring, Approx 5 Lakhs/Month" required></div>
+        </div>
+
+        <div class="section-title">🛡️ Refusals & Academic History</div>
+        <div class="grid">
+            <div class="input-group">
+                <label>Previously University Admission Refusal? *</label>
+                <select name="prev_admission_refusal" onchange="toggleAdmissionDetails(this.value)" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div class="input-group" id="admission_refusal_container">
+                <label>Admission Refusal Details (University Name & Country)</label>
+                <input type="text" name="admission_refusal_info" placeholder="Which university refused admission?">
+            </div>
+
+            <div class="input-group">
+                <label>Previously Visa Refusal (Any Country)? *</label>
+                <select name="prev_visa_refusal" onchange="toggleVisaDetails(this.value)" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div class="input-group" id="visa_refusal_container">
+                <label>Visa Refusal Details (Country Name & Reason)</label>
+                <input type="text" name="visa_refusal_info" placeholder="Which country and why?">
+            </div>
+        </div>
+
+        <div class="declaration-box">
+            <input type="checkbox" id="agree" required>
+            <label for="agree">I hereby declare that all the information provided is true and accurate to the best of my knowledge.</label>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">SUBMIT APPLICATION</button>
+    </form>
+</div>
+
+<!-- Updated Success Modal Box -->
+<div id="thankYouModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="success-icon">✔</div>
+        <h2 style="color:#6f42c1; margin-top: 0;">Success!</h2>
+        <p style="color: #666; font-size: 14px;">Your details have been saved successfully. Our consultant will contact you shortly.</p>
+        
+        <div class="modal-btn-group">
+            <button class="submit-btn" onclick="window.location.reload()">Fill New Form</button>
+            <a href="https://northgatevisaservices.com/" class="home-btn">Go Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Aap ka central logic script URL yahan daalein
+    const scriptURL = 'https://script.google.com/macros/s/YOUR_CENTRAL_DEPLOYMENT_URL/exec'; 
+    const form = document.getElementById('studentForm');
+    const btn = document.getElementById('submitBtn');
+
+    function toggleTravelCountries(val) {
+        document.getElementById('travel_countries_container').style.display = val === 'Yes' ? 'block' : 'none';
+    }
+
+    function toggleAdmissionDetails(val) {
+        document.getElementById('admission_refusal_container').style.display = val === 'Yes' ? 'block' : 'none';
+    }
+
+    function toggleVisaDetails(val) {
+        document.getElementById('visa_refusal_container').style.display = val === 'Yes' ? 'block' : 'none';
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerHTML = "Processing...";
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData);
+
+        fetch(scriptURL + "?" + params.toString(), { method: 'GET', mode: 'no-cors' })
+        .then(() => {
+            document.getElementById('thankYouModal').style.display = 'block';
+            form.reset();
+            btn.disabled = false;
+            btn.innerHTML = "SUBMIT APPLICATION";
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert("Submission failed. Please check your Script URL.");
+            btn.disabled = false;
+            btn.innerHTML = "SUBMIT APPLICATION";
+        });
+    });
+</script>
+
+</body>
+</html>
