@@ -183,8 +183,8 @@
 </div>
 
 <script>
-    // FIXED URL INTERCEPT METHOD FOR STUDENT ROUTING
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwRS74xWfnYK-5tPEUosxFkRl9rDReHfyIVSiZwoUli-888EAXVW6OquQMA2tNpu7C0qA/exec?form_type=Student'; 
+    // Pure Base URL Link
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwRS74xWfnYK-5tPEUosxFkRl9rDReHfyIVSiZwoUli-888EAXVW6OquQMA2tNpu7C0qA/exec'; 
     const form = document.getElementById('studentForm');
     const btn = document.getElementById('submitBtn');
 
@@ -207,6 +207,9 @@
 
         const formData = new FormData(form);
         const params = new URLSearchParams(formData);
+        
+        // FIXED ROUTING PARAMETER: Force state injection inside parameters string safely
+        params.set('form_type', 'Student');
 
         fetch(scriptURL + "?" + params.toString(), { method: 'GET', mode: 'no-cors' })
         .then(() => {
