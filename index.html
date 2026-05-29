@@ -80,7 +80,6 @@
     </div>
 
     <form id="studentForm">
-        <!-- Hidden input for the master routing engine -->
         <input type="hidden" name="form_type" value="Student">
         
         <div class="section-title">👤 Personal Details</div>
@@ -170,7 +169,6 @@
     </form>
 </div>
 
-<!-- Updated Success Modal Box -->
 <div id="thankYouModal" class="modal-overlay">
     <div class="modal-box">
         <div class="success-icon">✔</div>
@@ -185,8 +183,8 @@
 </div>
 
 <script>
-    // Aap ka central logic script URL yahan daalein
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwRS74xWfnYK-5tPEUosxFkRl9rDReHfyIVSiZwoUli-888EAXVW6OquQMA2tNpu7C0qA/exec'; 
+    // FIXED URL INTERCEPT METHOD FOR STUDENT ROUTING
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwRS74xWfnYK-5tPEUosxFkRl9rDReHfyIVSiZwoUli-888EAXVW6OquQMA2tNpu7C0qA/exec?form_type=Student'; 
     const form = document.getElementById('studentForm');
     const btn = document.getElementById('submitBtn');
 
